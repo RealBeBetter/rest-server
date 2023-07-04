@@ -21,11 +21,11 @@ public class GlobalExceptionHandler {
      * 处理方法参数无效异常
      *
      * @param ex ex
-     * @return {@link Return}<{@link Void}>
+     * @return {@link Result}<{@link Void}>
      */
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public Return<Void> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
+    public Result<Void> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
         StringBuilder errorMessage = new StringBuilder();
         BindingResult bindingResult = ex.getBindingResult();
         int length = bindingResult.getFieldErrors().size();
@@ -36,21 +36,21 @@ public class GlobalExceptionHandler {
                 errorMessage.append(",");
             }
         }
-        return Return.failed(errorMessage.toString());
+        return Result.failed(errorMessage.toString());
     }
 
     /**
      * 处理非法参数异常
      *
      * @param ex ex
-     * @return {@link Return}<{@link Void}>
+     * @return {@link Result}<{@link Void}>
      */
     @ExceptionHandler(IllegalArgumentException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public Return<Void> handleIllegalArgumentException(IllegalArgumentException ex) {
-        StringBuilder errorMessage = new StringBuilder("参数异常:");
+    public Result<Void> handleIllegalArgumentException(IllegalArgumentException ex) {
+        StringBuilder errorMessage = new StringBuilder("Parameter exception: ");
         String message = ex.getMessage();
         String result = errorMessage.append(message).toString();
-        return Return.failed(result);
+        return Result.failed(result);
     }
 }

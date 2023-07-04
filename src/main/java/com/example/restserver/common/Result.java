@@ -13,48 +13,47 @@ import java.util.List;
  * @since 2023/7/2 22:18
  */
 @Data
-public class Return<T> {
+public class Result<T> {
 
     private T data;
     private String errorCode;
     private String errorMessage;
     private boolean hasErrors;
 
-    public static <T> Return<T> success() {
+    public static <T> Result<T> success() {
         return success(null);
     }
 
-    public static <T> Return<T> success(T data) {
+    public static <T> Result<T> success(T data) {
         return success(data, null, null);
     }
 
-    public static <T> Return<T> success(T data, String errorCode, String errorMessage) {
+    public static <T> Result<T> success(T data, String errorCode, String errorMessage) {
         return build(data, errorCode, errorMessage, false);
     }
 
-    public static <T> Return<T> failed(String errorMessage) {
+    public static <T> Result<T> failed(String errorMessage) {
         return failed(null, null, errorMessage);
     }
 
-    public static <T> Return<T> failed(T data, String errorCode, String errorMessage) {
+    public static <T> Result<T> failed(T data, String errorCode, String errorMessage) {
         return build(data, errorCode, errorMessage, true);
     }
 
-    public static Return<Void> failed(String errorCode, String errorMessage) {
+    public static Result<Void> failed(String errorCode, String errorMessage) {
         return build(null, errorCode, errorMessage, true);
     }
 
-    public static Return<Void> build(boolean hasErrors) {
+    public static Result<Void> build(boolean hasErrors) {
         return build(null, null, null, hasErrors);
     }
 
-    public static <T> Return<T> build(boolean hasErrors, T data) {
+    public static <T> Result<T> build(boolean hasErrors, T data) {
         return build(data, null, null, hasErrors);
     }
 
-    @SuppressWarnings("rawtypes, unchecked")
-    public static <T> Return<T> build(T data, String errorCode, String errorMessage, boolean hasErrors) {
-        Return ret = new Return();
+    public static <T> Result<T> build(T data, String errorCode, String errorMessage, boolean hasErrors) {
+        Result<T> ret = new Result<T>();
         ret.data = data;
         ret.errorCode = errorCode;
         ret.errorMessage = errorMessage;
